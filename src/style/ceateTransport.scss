@@ -1,0 +1,73 @@
+.createTransport {
+  background: #eee;
+  padding: 1.5rem;
+  border-radius: 15px;
+
+  .heading {
+    padding: 1rem 0;
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    textarea {
+      padding: 0.8rem 0.5rem;
+      font-size: 0.9rem;
+      border-radius: 5px;
+      margin: 0.5rem;
+      border: 2px solid #ea837a;
+      background: transparent;
+    }
+
+    input,
+    textarea {
+      margin-left: 0;
+    }
+
+    input[type="checkbox"] {
+      margin-left: 0.7rem;
+    }
+
+    .days {
+      margin: 1rem 0;
+
+      .description {
+        padding: 1rem 0;
+
+        h4 {
+          font-size: 1.3rem;
+          padding: 0.2rem 0;
+        }
+        p {
+          font-size: 1.1rem;
+          color: #333;
+        }
+      }
+
+      .day {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        .saturday,
+        .sunday,
+        .monday,
+        .tuesday,
+        .wednesday,
+        .thursday,
+        .friday {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+  }
+}

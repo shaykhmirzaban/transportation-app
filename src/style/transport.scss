@@ -1,0 +1,126 @@
+.transport {
+  width: 90%;
+  margin: 0 auto;
+  padding: 1.5rem 0;
+
+  .heading {
+    h1 {
+      font-size: 1.2rem;
+      text-decoration: underline;
+      text-decoration-thickness: 3px;
+      text-decoration-color: #f2806d;
+    }
+  }
+
+  .sortingPart {
+    margin: 2rem 0;
+    background: #f2ac6d;
+    padding: 1.5rem;
+    border-radius: 10px;
+
+    .heading {
+      padding: 0.5rem 0;
+      h4 {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        text-decoration-thickness: 3px;
+        text-decoration-color: #f2806d;
+      }
+    }
+
+    form {
+      margin: 1rem 0;
+
+      select {
+        padding: 0.8rem 0.5rem;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        margin: 0.5rem;
+        border: 2px solid #ea837a;
+        background: transparent;
+
+        &:hover {
+          outline: 2px solid #e78838;
+        }
+      }
+      label {
+        font-size: 1.1rem;
+        color: #4e2500;
+      }
+    }
+  }
+
+  .allTransport {
+    .heading {
+      padding: 1.5rem 0;
+    }
+
+    .card {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+
+      .card1 {
+        width: 300px;
+        background: #f2ac6d;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 10px;
+        padding: 1rem;
+        border: 2px solid #f2ac6d;
+
+        img {
+          width: 100%;
+          border-radius: 10px;
+        }
+
+        .description {
+          padding-top: 1rem;
+
+          .name {
+            font-size: 1.2rem;
+            padding: 0.5rem 0;
+            color: #fff;
+          }
+          p {
+            font-size: 1rem;
+            color: #fff;
+          }
+
+          .buttonPart {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1rem 0;
+
+            button {
+              margin: 0;
+              font-size: 0.9rem;
+              width: 100px;
+              height: 35px;
+              border: none;
+              box-shadow: none;
+              border-radius: 10px;
+
+              &:hover {
+                opacity: 0.7;
+              }
+            }
+            h1 {
+              color: #fff;
+            }
+          }
+        }
+
+        &:hover {
+          border-color: #ff4e66;
+        }
+      }
+    }
+  }
+}

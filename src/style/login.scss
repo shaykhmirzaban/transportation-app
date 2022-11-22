@@ -1,0 +1,164 @@
+.login,
+.SignUp {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .leftSide {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .image1,
+    .image2 {
+      width: 100%;
+      height: 100%;
+      background-image: url("../images/authentication/login1.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .image2 {
+      background-image: url(../images/authentication/login.jpg);
+    }
+  }
+
+  .rightSide {
+    width: 50%;
+    height: 100%;
+    background: #eec7a4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .box {
+      padding: 2rem;
+      background: #ffffff73;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 15px;
+      border-top: 5px solid #e98176;
+      border-bottom: 5px solid #da8350;
+
+      .heading {
+        h1 {
+          font-size: 2.5rem;
+          color: #d24f4c;
+        }
+      }
+
+      form {
+        padding: 2rem 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        input,
+        select {
+          width: 220px;
+          padding: 0.8rem 0.5rem;
+          font-size: 0.9rem;
+          border-radius: 5px;
+          margin: 0.5rem;
+          border: 2px solid #ea837a;
+          background: transparent;
+
+          &:active,
+          &:focus {
+            outline: 2px solid #e78838;
+          }
+        }
+
+        .password {
+          width: 220px;
+          padding: 0.8rem 0.5rem;
+          font-size: 0.9rem;
+          border-radius: 5px;
+          margin: 0.7rem;
+          border: 2px solid #ea837a;
+          background: transparent;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          input {
+            background: transparent;
+            outline: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+
+            &:focus,
+            &:active {
+              border: none;
+            }
+          }
+
+          &:hover {
+            outline: 2px solid #e78838;
+          }
+        }
+
+        button {
+          width: 120px;
+          height: 42px;
+          font-size: 1.1rem;
+          border-radius: 50px;
+          background: #ff4e66;
+          color: #fff;
+          box-shadow: -3px -2px 0px 2px #e78a3a;
+          margin: 2rem 0;
+          margin-bottom: 0;
+          cursor: pointer;
+          border: 2px solid #ffd9bd;
+
+          &:hover {
+            box-shadow: 3px 2px 0px 2px #e78a3a;
+          }
+        }
+
+        .buttonPart {
+          .error {
+            color: red;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+          }
+        }
+      }
+      .switchPage {
+        p {
+          font-size: 0.9rem;
+          color: #1b0a0aba;
+          a {
+            color: #ff4e66;
+            font-weight: 500;
+
+            &:hover {
+              text-decoration: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .SignUp .leftSide {
+    display: none;
+  }
+  .SignUp .rightSide {
+    width: 100%;
+  }
+}

@@ -1,0 +1,40 @@
+.label,
+.label1 {
+  position: absolute;
+  top: 1.2rem;
+  z-index: 1123123123;
+  right: 2rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background: linear-gradient(45deg, #08b805, #006f2be8);
+  outline: 2px solid #049300;
+  transform: translateX(500px);
+  outline-offset: 1px;
+  animation-name: show;
+  animation-duration: 10s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+
+  h1 {
+    font-size: 1rem;
+    color: #fff;
+  }
+}
+
+@keyframes show {
+  0% {
+    transform: translateX(500px);
+  }
+  30% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(500px);
+  }
+}
+
+.label1 {
+  background: linear-gradient(45deg, #b80d05, rgb(111 18 0 / 91%));
+  outline: 2px solid #931600;
+}

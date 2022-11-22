@@ -1,0 +1,12 @@
+.smDropDown {
+  padding: 0.8rem 0.5rem;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  margin: 0.5rem;
+  border: 2px solid #ea837a;
+  background: transparent;
+
+  &:hover {
+    outline: 2px solid #e78838;
+  }
+}

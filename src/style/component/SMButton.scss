@@ -1,0 +1,18 @@
+.smButton {
+  min-width: 120px;
+  min-height: 40px;
+  font-size: 1rem;
+  border-radius: 50px;
+  background: #ff4e66;
+  color: #fff;
+  box-shadow: -3px -2px 0px 2px #e78a3a;
+  margin: 2rem 0;
+  margin-bottom: 0;
+  cursor: pointer;
+  border: 2px solid #ffd9bd;
+  padding: 0.5rem 0.8rem;
+
+  &:hover {
+    box-shadow: 3px 2px 0px 2px #e78a3a;
+  }
+}

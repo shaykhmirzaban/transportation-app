@@ -1,0 +1,130 @@
+td,
+th {
+  border: 2px solid #333;
+  padding: 1rem;
+}
+
+.studentRegistrationList,
+.TrainerRegistrationList {
+  background: #eee;
+  padding: 1.5rem;
+  border-radius: 15px;
+
+  .heading {
+    background: rgba(164, 58, 248, 0.1411764706);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin: 0.7rem 0;
+
+    h1 {
+      font-size: 1.3rem;
+      color: #0c0015;
+    }
+  }
+
+  .basicInfo,
+  .advanceInfo,
+  .function {
+    .heading {
+      background: transparent;
+      padding: 1rem 0;
+      padding-bottom: 0;
+      h1 {
+        font-size: 1.2rem;
+      }
+    }
+    table {
+      border-collapse: collapse;
+
+      thead {
+        background: rgb(242 128 109);
+        color: #fff;
+
+        tr {
+          th {
+            border: 2px solid #f2ac6d;
+          }
+        }
+      }
+
+      tbody {
+        background: rgb(247, 237, 254);
+        color: #522700;
+
+        tr {
+          td {
+            border: 1px solid #f2ac6d;
+
+            button {
+              width: 90px;
+              height: 35px;
+              font-size: 1rem;
+              border-radius: 50px;
+              background: #522700;
+              color: #fff;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.courseList {
+  width: 100%;
+
+  .heading {
+    h1 {
+      font-size: 1.5rem;
+      padding: 1rem 0;
+      color: #0c0015;
+    }
+  }
+
+  .tableBasic,
+  .tableAdvance {
+    background: #eee;
+    padding: 1.5rem;
+    border-radius: 15px;
+    margin: 1rem 0;
+
+    table {
+      border-collapse: collapse;
+
+      thead {
+        background: rgb(242 128 109);
+        color: #fff;
+
+        th {
+          border: 2px solid #f2ac6d;
+        }
+      }
+
+      tbody {
+        background: rgb(249 200 192);
+        color: #522700;
+
+        td {
+          border: none;
+          border: 1px solid #f2ac6d;
+
+          button {
+            width: 90px;
+            height: 35px;
+            font-size: 1rem;
+            border-radius: 50px;
+            background: #ff4e66;
+            border: 2px solid #ffd9bd;
+            color: #fff;
+            cursor: pointer;
+
+            &:hover {
+              opacity: 0.7;
+            }
+          }
+        }
+      }
+    }
+  }
+}

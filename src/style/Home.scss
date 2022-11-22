@@ -1,0 +1,57 @@
+body {
+  background: #ffd280;
+}
+
+.hero {
+  width: 90%;
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 0 auto;
+
+  .detail {
+    width: 400px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background: #ffd280;
+
+    h1 {
+      font-size: 2.5rem;
+      margin: 0.5rem 0;
+    }
+    p {
+      font-size: 1rem;
+      color: rgb(129 45 0);
+      padding: 0.7rem 0;
+    }
+    .dummy {
+      color: #4e2500e3;
+      font-size: 0.9rem;
+    }
+    h4 {
+      padding: 0.7rem 0;
+    }
+    ul {
+      margin: 0.3rem 0.9rem;
+      li {
+        font-size: 0.9rem;
+        padding: 0.2rem 0;
+        color: rgb(129 45 0);
+      }
+    }
+  }
+
+  .image {
+    width: 50%;
+    height: 100%;
+    background-image: url("../images/bg1.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}

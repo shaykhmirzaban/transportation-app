@@ -1,0 +1,16 @@
+transport name:
+transport detail: 
+per seat price: 
+total seat avalaible: 
+sarting route: 
+ending route: 
+timing: 
+day: 
+
+starting route:
+ending route: 
+select seat:
+timing: 
+day: 
+
+
