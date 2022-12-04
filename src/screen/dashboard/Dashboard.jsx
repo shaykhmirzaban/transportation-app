@@ -236,8 +236,8 @@ export default function dashboard() {
           {flag
             ? [
                 {
-                  name: "Course List",
-                  routeName: "course-list",
+                  name: "Transport List",
+                  routeName: "transport-list",
                   icons: "fa-solid fa-list-ul",
                 },
                 {

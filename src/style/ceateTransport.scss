@@ -1,4 +1,5 @@
-.createTransport {
+.createTransport,
+.transportListUpdate {
   background: #eee;
   padding: 1.5rem;
   border-radius: 15px;
@@ -7,6 +8,7 @@
     padding: 1rem 0;
     h1 {
       font-size: 1.5rem;
+      padding: 0 !important;
     }
   }
 

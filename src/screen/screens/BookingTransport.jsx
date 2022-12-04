@@ -1,27 +1,41 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { addItem } from "../../config/FirebaseMethods";
+import { addItem, user_is_signin } from "../../config/FirebaseMethods";
 
+// component
+import SMLoading from "../../components/SMLoading";
+import SMLabel from "../../components/SMLabel";
+import SMLabel1 from "../../components/SMLabe1";
 // style
 import "../../style/courseDetail.scss";
 
 export default function BookingTransport() {
   let [data, setData] = useState([]);
   let [item, setItem] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
+    name: "",
     phone: "",
-    address: "",
-    city: "",
-    zipCode: "",
-    course: "",
+    startingPath: "",
+    endingPath: "",
+    time: "",
+    day: "",
+    selectedSeat: "",
   });
+  let [isLoding, setIsLoding] = useState(false);
+  let [label, setLabel] = useState("");
+  let [label1, setLabel1] = useState("");
+
   let location = useLocation();
   let navigate = useNavigate();
 
   useEffect(() => {
-    setData(location.state);
+    user_is_signin()
+      .then((_) => {
+        setData(location.state);
+      })
+      .catch((_) => {
+        navigate("/login");
+        alert("before Booking you need to login");
+      });
   }, []);
 
   const currentV = (e) => {
@@ -31,16 +45,51 @@ export default function BookingTransport() {
     });
   };
 
-  const userInfo = (e) => {
+  const timeFn = (e) => {
+    var timeSplit = e.target.value.split(":"),
+      meridian,
+      hours,
+      minutes;
+
+    hours = timeSplit[0];
+    minutes = timeSplit[1];
+
+    if (hours > 12) {
+      meridian = "PM";
+      hours -= 12;
+    } else if (hours < 12) {
+      meridian = "AM";
+      if (hours == 0) {
+        hours = 12;
+      }
+    } else {
+      meridian = "PM";
+    }
+
+    let timeFormate = `${hours}:${minutes}:${meridian}`;
+    setItem((val) => {
+      return { ...val, time: timeFormate };
+    });
+  };
+
+  const submitDetailFn = (e) => {
     e.preventDefault();
 
-    item.course = data.courseName;
-    item.admissionStart = data.admissionStart;
-    item.admissionEnd = data.admissionEnd;
+    item.totalPrice = Number(item.selectedSeat) * Number(data.perSeatRate);
+    item.date = new Date().toLocaleDateString();
+    setIsLoding(true);
 
-    addItem(item, "enrolledStudent")
-      .then((_) => console.log(_))
-      .catch((_) => console.log(_));
+    addItem(item, `Booking/${data.id}`)
+      .then((_) => {
+        setLabel("Successfully Added");
+        console.log(_);
+        setIsLoding(false);
+      })
+      .catch((_) => {
+        setLabel1("something went wrong");
+        console.log(_);
+        setIsLoding(false);
+      });
   };
 
   return (
@@ -49,48 +98,89 @@ export default function BookingTransport() {
         <div className="detail">
           <div className="courseDescription">
             <div className="course-detail">
-              <h1>{data.courseName}</h1>
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Accusantium vero blanditiis molestias a sed asperiores
-                aspernatur
-              </p>
+              <h1 style={{ textTransform: "capitalize" }}>
+                {data.transportName}
+              </h1>
+              <p>{data.transportDetail}</p>
             </div>
 
             <div className="courseDuration">
               <h4>
-                Course Duration:{" "}
-                <span style={{ color: "#a43af8" }}>
-                  {data.courseDuration} Month{" "}
+                Starting Path:{" "}
+                <span style={{ color: "rgb(246 119 98)" }}>
+                  {data.startingPath}
+                </span>
+              </h4>
+              <h4>
+                Ending Path:{" "}
+                <span style={{ color: "rgb(246 119 98)" }}>
+                  {data.endingPath}
                 </span>
               </h4>
             </div>
 
             <div className="noOfQuiz">
               <h4>
-                no. Of Quiz:{" "}
-                <span style={{ color: "#a43af8" }}>
-                  {Number(data.noOfQuiz) < 10
-                    ? `0${data.noOfQuiz}`
-                    : data.noOfQuiz}
+                Starting Time:{" "}
+                <span style={{ color: "rgb(246 119 98)" }}>
+                  {data.startingTime}
+                </span>
+              </h4>
+              <h4>
+                Ending Time:{" "}
+                <span style={{ color: "rgb(246 119 98)" }}>
+                  {data.endingTime}
                 </span>
               </h4>
             </div>
 
             <div className="leadTrainer">
               <h4>
-                Lead Trainer:{" "}
-                <span style={{ color: "#a43af8" }}>{data.leadTrainer}</span>
+                Total Seat:{" "}
+                <span style={{ color: "rgb(246 119 98)" }}>
+                  {data.totalSeat}
+                </span>
+              </h4>
+              <h4>
+                Per Seat Rate:{" "}
+                <span style={{ color: "rgb(246 119 98)" }}>
+                  {data.perSeatRate}
+                </span>
               </h4>
             </div>
 
             <div className="assistantTrainer">
-              <h4>Assistant Trainer</h4>
+              <h4 style={{ fontWeight: "bold", color: "#333" }}>Days</h4>
               <ul>
-                {data.assistantTrainer &&
-                  data.assistantTrainer.map((value, index) => (
-                    <li key={index} style={{ color: "#a43af8" }}>
-                      {value}
+                {data.days &&
+                  Object.values(data.days).map((value, index) => (
+                    <li key={index} style={{ padding: "10px 0" }}>
+                      <span style={{ textTransform: "capitalize" }}>
+                        {Object.keys(data.days)[index]}:{" "}
+                      </span>
+                      {value == false || value == "false" ? (
+                        <span
+                          style={{
+                            backgroundColor: "red",
+                            color: "#fff",
+                            padding: "5px",
+                            borderRadius: "5px",
+                          }}
+                        >
+                          close
+                        </span>
+                      ) : (
+                        <span
+                          style={{
+                            backgroundColor: "green",
+                            color: "#fff",
+                            padding: "5px",
+                            borderRadius: "5px",
+                          }}
+                        >
+                          open
+                        </span>
+                      )}
                     </li>
                   ))}
               </ul>
@@ -104,71 +194,100 @@ export default function BookingTransport() {
 
       <div className="courseForm">
         <div className="heading">
-          <h1>Course Form</h1>
+          <h1>Booking Form</h1>
         </div>
-        <form onSubmit={userInfo}>
-          <input
-            type="text"
-            placeholder="Enter first Name"
-            name="firstName"
-            onChange={currentV}
-          />
-          <input
-            type="text"
-            placeholder="Enter last name"
-            name="lastName"
-            onChange={currentV}
-          />
-          <input
-            type="email"
-            placeholder="Student Email"
-            name="email"
-            onChange={currentV}
-          />
-          <input
-            type="number"
-            placeholder="Enter phone no"
-            name="phone"
-            onChange={currentV}
-          />
-          <input
-            type="text"
-            placeholder="Street Address"
-            name="address"
-            onChange={currentV}
-          />
-          <select name="city" onChange={currentV}>
-            {data &&
-              data.cities &&
-              data.cities.length > 0 &&
-              data.cities.map((value, index) => {
-                return (
-                  <option value={value} key={index}>
-                    {value}
-                  </option>
-                );
-              })}
-          </select>
-          <input
-            type="text"
-            placeholder="Enter Zip code"
-            name="zipCode"
-            onChange={currentV}
-          />
 
-          <input
-            type="text"
-            placeholder="Enter course name"
-            value={data && data.courseName}
-            disabled
-            className="subjectName"
-          />
+        <form onSubmit={submitDetailFn}>
+          <div className="name">
+            <label>Your Name:</label>
+            <input
+              type="text"
+              placeholder="Enter Your Name"
+              name="name"
+              onChange={currentV}
+            />
+          </div>
+
+          <div className="phoneNo">
+            <label>Phone no:</label>
+            <input
+              type="number"
+              placeholder="Enter phone no"
+              name="phone"
+              onChange={currentV}
+            />
+          </div>
+
+          <div className="startingPath">
+            <label>Starting Path:</label>
+            <input
+              type="text"
+              placeholder="Starting Path"
+              name="startingPath"
+              onChange={currentV}
+            />
+          </div>
+
+          <div className="endingPath">
+            <label>Ending Path:</label>
+            <input
+              type="text"
+              placeholder="Ending Path"
+              name="endingPath"
+              onChange={currentV}
+            />
+          </div>
+
+          <div className="time">
+            <label>Time:</label>
+            <input
+              type="time"
+              placeholder="Time"
+              name="time"
+              onChange={timeFn}
+            />
+          </div>
+
+          <div className="day">
+            <label>Day:</label>
+            <select name="day" onChange={currentV}>
+              {data &&
+                data.days &&
+                Object.values(data.days).map((value, index) => {
+                  if (value == "true" || value == true) {
+                    let name = Object.keys(data.days)[index];
+                    return (
+                      <option value={name} key={index}>
+                        {name}
+                      </option>
+                    );
+                  }
+                })}
+            </select>
+          </div>
+
+          <div className="selectSeat">
+            <label>Select Seat:</label>
+            {/* <select name="selectedSeat" onChange={currentV}>
+            {totalSeat.map((value, index) => {
+              return (
+                <option value={value} key={index}>
+                  {value}
+                </option>
+              );
+            })}
+          </select> */}
+            <input type="number" name="selectedSeat" onChange={currentV} />
+          </div>
 
           <div className="button">
-            <button>Submit</button>
+            <button>{isLoding ? <SMLoading /> : "Submit"}</button>
           </div>
         </form>
       </div>
+
+      {label && <SMLabel name={label} />}
+      {label1 && <SMLabel1 name={label1} />}
     </section>
   );
 }

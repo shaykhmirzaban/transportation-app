@@ -1,12 +1,32 @@
 // component
-import { Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import SMButton from "../../components/SMButton";
 import SMInputField from "../../components/SMInputField";
+import { getItem, user_is_signin } from "../../config/FirebaseMethods";
 
 // style
 import "../../style/transport.scss";
 
 export default function TransportHome() {
+  let [item, setItem] = useState([]);
+  let navigate = useNavigate();
+  useEffect(() => {
+    getItem("createCategory")
+      .then((e) => {
+        //{[0: {0: {}, 1: {}}]}
+        //[0: {0: {}, 1: {}}]
+        // [123213: {}, 1231231: {}]
+        // [0: {}, 1: {}]
+        setItem(Object.values(...Object.values(e)));
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
+  // const bookingFn = () => {
+
+  // };
+
   return (
     <>
       <div className="transport">
@@ -47,18 +67,27 @@ export default function TransportHome() {
             <h1>All Transport</h1>
           </div>
           <div className="card">
-            <div className="card1">
-              <img src="./images/bg.jpg" alt="Image not found" />
+            {item.map((value, index) => {
+              return (
+                <div className="card1" key={index}>
+                  <img src={value.image} alt="Image not found" />
 
-              <div className="description">
-                <h3 className="name">Private Transport</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div className="buttonPart">
-                  <SMButton value="Booking Now" fnName={() => Navigate("")} />
-                  <h1>RS 20</h1>
+                  <div className="description">
+                    <h3 className="name">{value.transportName}</h3>
+                    <p>{value.transportDetail}</p>
+                    <div className="buttonPart">
+                      <SMButton
+                        value="Booking Now"
+                        fnName={() =>
+                          navigate("booking-transport", { state: value })
+                        }
+                      />
+                      <h1>RS {value.perSeatRate}</h1>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>

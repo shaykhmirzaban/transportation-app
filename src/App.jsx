@@ -15,7 +15,9 @@ import TransportHome from "./screen/screens/TransportHome.jsx";
 import Dashboard from "./screen/dashboard/Dashboard";
 import DashboardHome from "./screen/dashboard/DashboardHome";
 import CreateTransport from "./screen/dashboard/CreateTransport.jsx";
-import CreateList from "./screen/dashboard/CreateList.jsx";
+import TransportList from "./screen/dashboard/TransportList.jsx";
+import TransportListHome from "./screen/dashboard/TransportListHome.jsx";
+import TransportListUpdate from "./screen/dashboard/TransportListUpdate.jsx";
 
 export default function App() {
   return (
@@ -35,7 +37,13 @@ export default function App() {
           <Route path="dashboard/:id" element={<Dashboard />}>
             <Route index element={<DashboardHome />} />
             <Route path="create-transport" element={<CreateTransport />} />
-            <Route path="create-list" element={<CreateList />} />
+            <Route path="transport-list" element={<TransportList />}>
+              <Route index element={<TransportListHome />} />
+              <Route
+                path="transport-list-update"
+                element={<TransportListUpdate />}
+              />
+            </Route>
             <Route path="*" element={<Error1 />} />
           </Route>
           <Route path="*" element={<Error />} />

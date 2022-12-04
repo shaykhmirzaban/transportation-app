@@ -10,6 +10,7 @@ export default function SMInputField(props) {
     isRequired,
     type,
     value,
+    checked
   } = props;
   return (
     <input
@@ -21,6 +22,7 @@ export default function SMInputField(props) {
       style={style}
       id={id && id}
       value={value && value}
+      checked={checked && checked}
     />
   );
 }

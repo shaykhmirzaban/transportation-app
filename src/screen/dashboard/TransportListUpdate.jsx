@@ -1,47 +1,57 @@
-import { useState } from "react";
-import SMButton from "../../components/SMButton";
-import SMInputField from "../../components/SMInputField";
-import { uploadImage } from "../../config/FirebaseMethods";
+import React, { useState } from "react";
 import SMLabel from "../../components/SMLabel";
 import SMLabe1 from "../../components/SMLabe1";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import SMInputField from "../../components/SMInputField";
+import SMButton from "../../components/SMButton";
 
 // style
 import "../../style/ceateTransport.scss";
+import { useEffect } from "react";
+import { updateItem } from "../../config/FirebaseMethods";
 
-export default function CreateTransport() {
-  let [currentImage, setCurrentImage] = useState("");
+const TransportListUpdate = () => {
   let [data, setData] = useState({
-    transportName: "",
-    transportDetail: "",
     perSeatRate: "",
-    totalSeat: "",
     startingPath: "",
     endingPath: "",
     startingTime: "",
     endingTime: "",
+    totalSeat: "",
+    transportDetail: "",
+    transportName: "",
     days: {
-      saturday: "false",
-      sunday: "false",
-      monday: "false",
-      tuesday: "false",
-      wednesday: "false",
-      thursday: "false",
-      friday: "false",
+      friday: "",
+      monday: "",
+      saturday: "",
+      sunday: "",
+      thursday: "",
+      tuesday: "",
+      wednesday: "",
     },
-    id: "",
   });
-  let [flag, setFlag] = useState(false);
+
   let [label, setLabel] = useState("");
   let [label1, setLabel1] = useState("");
+  let [flag, setFlag] = useState(false);
 
-  // id
   let { id } = useParams();
+  let location = useLocation();
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(location.state);
+    setData(location.state);
+  }, []);
 
   const currentV = (e) => {
     let { value, name } = e.target;
+
     setData((val) => {
-      return { ...val, [name]: value };
+      return {
+        ...val,
+        [name]: value,
+      };
     });
   };
 
@@ -112,44 +122,36 @@ export default function CreateTransport() {
     });
   }
 
-  // addItem(data, "createCategory")
-  //   .then((_) => {
-  //     console.log(_);
-  //   })
-  //   .catch((_) => {
-  //     console.log(_);
-  //   });
-
-  const submitDataFn = (e) => {
+  const updateDataFn = (e) => {
     e.preventDefault();
     setFlag(true);
-    data.id = id;
 
-    uploadImage(currentImage, "images", data, `createCategory/${id}`)
+    updateItem(data, `createCategory/${id}`, data.key)
       .then((_) => {
-        alert("Successfully Added");
+        console.log(_);
+        setLabel("Successfully Update");
         setFlag(false);
-        setLabel("successfully create");
+        navigate(`/dashboard/${id}/transport-list`);
       })
       .catch((_) => {
-        console.log(_);
-        setFlag(false);
         setLabel1("Something went wrong");
+        setFlag(false);
       });
   };
 
   return (
-    <section className="createTransport">
+    <section className="transportListUpdate">
       <div className="heading">
-        <h1>Create Transport</h1>
+        <h1>Update Item</h1>
       </div>
 
-      <form onSubmit={submitDataFn}>
+      <form onSubmit={updateDataFn}>
         <label htmlFor="">Transport Name: </label>
         <SMInputField
           type="text"
           placeholder="i.e. school vans etc."
           name="transportName"
+          value={data.transportName}
           fnName={currentV}
         />
 
@@ -159,6 +161,7 @@ export default function CreateTransport() {
           placeholder="describe short detail about your service."
           cols="30"
           rows="10"
+          value={data.transportDetail}
           onChange={currentV}
         ></textarea>
 
@@ -167,6 +170,7 @@ export default function CreateTransport() {
           type="number"
           placeholder="i.e. 2, 4, 5, etc."
           name="totalSeat"
+          value={data.totalSeat}
           fnName={currentV}
         />
 
@@ -175,6 +179,7 @@ export default function CreateTransport() {
           type="number"
           placeholder="i.e. 250, 150, etc."
           name="perSeatRate"
+          value={data.perSeatRate}
           fnName={currentV}
         />
 
@@ -183,6 +188,7 @@ export default function CreateTransport() {
           type="text"
           placeholder="i.e. Korangi, Orangi, etc."
           name="startingPath"
+          value={data.startingPath}
           fnName={currentV}
         />
 
@@ -191,14 +197,29 @@ export default function CreateTransport() {
           type="text"
           placeholder="i.e. Korangi, Orangi, etc."
           name="endingPath"
+          value={data.endingPath}
           fnName={currentV}
         />
 
         <label htmlFor="">Starting Time: </label>
-        <SMInputField type="time" name="startingTime" fnName={onTimeChange} />
+        <SMInputField
+          type="time"
+          name="startingTime"
+          //   value={data.startingTime.slice(0, 5)}
+          fnName={onTimeChange}
+        />
 
         <label htmlFor="">Ending Time: </label>
-        <SMInputField type="time" name="endingTime" fnName={onTimeChange1} />
+        <SMInputField
+          type="time"
+          name="endingTime"
+          //   value={
+          //     Number(data.endingTime.slice(0, 1)) < 10
+          //       ? `0${data.endingTime.slice(0, data.endingTime.length - 3)}`
+          //       : data.endingTime.slice(0, 5)
+          //   }
+          fnName={onTimeChange1}
+        />
 
         <div className="days">
           <div className="description">
@@ -216,6 +237,7 @@ export default function CreateTransport() {
                 type="checkbox"
                 name="day"
                 id="saturday"
+                checked={data.days.saturday == true && data.days.saturday}
                 fnName={checkedDay}
               />
             </div>
@@ -226,6 +248,7 @@ export default function CreateTransport() {
                 type="checkbox"
                 name="day"
                 id="sunday"
+                checked={data.days.sunday == true && data.days.sunday}
                 fnName={checkedDay}
               />
             </div>
@@ -236,6 +259,7 @@ export default function CreateTransport() {
                 type="checkbox"
                 name="day"
                 id="monday"
+                checked={data.days.monday == true && data.days.monday}
                 fnName={checkedDay}
               />
             </div>
@@ -246,6 +270,7 @@ export default function CreateTransport() {
                 type="checkbox"
                 name="day"
                 id="tuesday"
+                checked={data.days.tuesday == true && data.days.tuesday}
                 fnName={checkedDay}
               />
             </div>
@@ -256,6 +281,7 @@ export default function CreateTransport() {
                 type="checkbox"
                 name="day"
                 id="wednesday"
+                checked={data.days.wednesday == true && data.days.wednesday}
                 fnName={checkedDay}
               />
             </div>
@@ -266,6 +292,7 @@ export default function CreateTransport() {
                 type="checkbox"
                 name="day"
                 id="thursday"
+                checked={data.days.thursday == true && data.days.thursday}
                 fnName={checkedDay}
               />
             </div>
@@ -276,25 +303,11 @@ export default function CreateTransport() {
                 type="checkbox"
                 name="day"
                 id="friday"
+                checked={data.days.friday == true && data.days.friday}
                 fnName={checkedDay}
               />
             </div>
           </div>
-        </div>
-
-        <div className="uploadImage">
-          <div className="heading">
-            <h1>upload Image</h1>
-            <p>
-              please upload a clear image that tells the condition of your
-              service so the customer easily sees your service and selects you.
-            </p>
-          </div>
-
-          <SMInputField
-            type="file"
-            fnName={(e) => setCurrentImage(e.target.files[0])}
-          />
         </div>
 
         <SMButton value="Submit" isLoading={flag} />
@@ -304,4 +317,6 @@ export default function CreateTransport() {
       {label1 && <SMLabe1 name={label1} />}
     </section>
   );
-}
+};
+
+export default TransportListUpdate;
